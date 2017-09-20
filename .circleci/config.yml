@@ -13,5 +13,5 @@ jobs:
           POSTGRES_PASSWORD: ""
     steps:
       - checkout
-      - run: sudo apt install postgresql-client-9.6
-      - run: pg_isready
+      # - run: sudo apt install postgresql-client-9.6
+      - run: pg_isready -d $TEST_DATABASE_URL
