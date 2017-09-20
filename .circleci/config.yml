@@ -14,3 +14,4 @@ jobs:
     steps:
       - checkout
       - run: sudo apt install postgresql-client-9.6
+      - run: pg_isready
