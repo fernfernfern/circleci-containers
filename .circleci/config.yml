@@ -4,13 +4,21 @@ jobs:
     docker:
       - image: circleci/python:3.6.2-stretch-browsers
         environment:
-          TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_t?sslmode=disable
-          POSTGRES_USER: ubuntu
-          POSTGRES_DB: circle_test
-          POSTGRES_PASSWORD: ""
+          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
       - image: circleci/postgres:9.6.5-alpine-ram
     steps:
       - checkout
       - run: sudo apt install postgresql-client-9.6
-      - run: pg_isready -d $TEST_DATABASE_URL
       - run: whoami
+      - run: |
+          psql \
+          -d $TEST_DATABASE_URL \
+          -c "CREATE TABLE test (name char(25));"
+      - run: |
+          psql \
+          -d $TEST_DATABASE_URL \
+          -c "INSERT INTO test (name) VALUES ('fern')"
+      - run: |
+          psql \
+          -d $TEST_DATABASE_URL \
+          -c "SELECT * from test"
