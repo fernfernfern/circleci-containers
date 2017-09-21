@@ -10,3 +10,4 @@ jobs:
       - checkout
       - run: sudo apt install postgresql-client-9.6
       - run: pg_isready -d $TEST_DATABASE_URL
+      - run: whoami
